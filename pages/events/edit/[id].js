@@ -1,22 +1,29 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { FaImage } from 'react-icons/fa'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import moment from 'moment'
 import Layout from '@/components/Layout'
 import { API_URL } from '@/config/index'
 import styles from '@/styles/Form.module.css'
 
-export default function AddEventPage() {
+export default function EditEventPage({ evt }) {
   const [values, setValues] = useState({
-    name: '',
-    performers: '',
-    venue: '',
-    address: '',
-    date: '',
-    time: '',
-    description: '',
+    name: evt.name,
+    performers: evt.performers,
+    venue: evt.venue,
+    address: evt.address,
+    date: evt.date,
+    time: evt.time,
+    description: evt.description,
   })
+
+  const [imagePreview, setImagePreview] = useState(
+    evt.image ? evt.image.formats.thumbnail.url : null,
+  )
 
   const router = useRouter()
 
@@ -28,8 +35,8 @@ export default function AddEventPage() {
     if (hasEmptyFields) {
       toast.error('Wypełnij wszystkie pola')
     } else {
-      const res = await fetch(`${API_URL}/events`, {
-        method: 'POST',
+      const res = await fetch(`${API_URL}/events/${evt.id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -53,7 +60,7 @@ export default function AddEventPage() {
   return (
     <Layout title="Dodaj wydarzenie">
       <Link href="/events">Wróć</Link>
-      <h1>Dodaj wydarzenie</h1>
+      <h1>Edytuj wydarzenie</h1>
       <ToastContainer />
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.grid}>
@@ -104,7 +111,7 @@ export default function AddEventPage() {
               type="date"
               id="date"
               name="date"
-              value={values.date}
+              value={moment(values.date).format('yyyy-MM-DD')}
               min={new Date().toISOString().split('T')[0]}
               onChange={handleInputChange}
             />
@@ -127,8 +134,30 @@ export default function AddEventPage() {
           value={values.description}
           onChange={handleInputChange}
         ></textarea>
-        <input type="submit" value="Dodaj wydarzenie" className="btn" />
+        <input type="submit" value="Zapisz" className="btn" />
       </form>
+      <h2>Zdjęcie</h2>
+      {imagePreview ? (
+        <Image src={imagePreview} height={100} width={170} />
+      ) : (
+        <div>Brak zdjęcia</div>
+      )}
+      <div>
+        <button className="btn-secondary">
+          <FaImage /> {imagePreview ? 'Zmień' : 'Dodaj'}
+        </button>
+      </div>
     </Layout>
   )
+}
+
+export async function getServerSideProps({ params: { id } }) {
+  const res = await fetch(`${API_URL}/events/${id}`)
+  const evt = await res.json()
+
+  return {
+    props: {
+      evt,
+    },
+  }
 }

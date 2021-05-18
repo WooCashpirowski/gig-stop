@@ -1,18 +1,30 @@
 import Layout from '@/components/Layout'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { API_URL } from '@/config/index'
 import styles from '@/styles/Event.module.css'
-import Link from 'next/link'
 import Image from 'next/image'
 import { FaPencilAlt, FaTimes } from 'react-icons/fa'
 
 export default function EventPage({ evt }) {
-  const deleteEvent = (e) => {
+  const router = useRouter()
+
+  const deleteEvent = async (e) => {
     e.preventDefault()
-    console.log('delete')
+    if (confirm('Na pewno?')) {
+      const res = await fetch(`${API_URL}/events/${evt.id}`, {
+        method: 'DELETE',
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        toast.error(data.message)
+      } else {
+        router.push('/events')
+      }
+    }
   }
-  const {
-    image: { formats: img },
-  } = evt
 
   return (
     <Layout>
@@ -31,14 +43,11 @@ export default function EventPage({ evt }) {
         <span>
           {new Date(evt.date).toLocaleDateString('PL')}, {evt.time}
         </span>
+        <ToastContainer />
         <h1>{evt.name}</h1>
-        {img && (
+        {evt.image && (
           <div className={styles.image}>
-            <Image
-              src={img.medium ? img.medium.url : img.small.url}
-              width={960}
-              height={600}
-            />
+            <Image src={evt.image.formats.small.url} width={960} height={600} />
           </div>
         )}
         <h3>Wykonawcy:</h3>
