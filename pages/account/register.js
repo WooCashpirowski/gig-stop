@@ -1,6 +1,7 @@
+import { useContext, useEffect, useState } from 'react'
+import AuthContext from '@/context/AuthContext'
 import Layout from '@/components/Layout'
 import Link from 'next/link'
-import { useContext, useEffect, useState } from 'react'
 import { FaUser } from 'react-icons/fa'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -12,13 +13,15 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('')
   const [passwordConf, setPasswordConf] = useState('')
 
+  const { register, error } = useContext(AuthContext)
+
   const handleSubmit = (e) => {
     e.preventDefault()
     if (password !== passwordConf) {
       toast.error('Hasła nie są zgodne')
       return
     }
-    console.log({ userName, email, password })
+    register({ userName, email, password })
   }
 
   return (
@@ -69,7 +72,7 @@ export default function RegisterPage() {
               onChange={(e) => setPasswordConf(e.target.value)}
             />
           </div>
-          <input type="submit" value="Zaloguj" className="btn" />
+          <input type="submit" value="Zarejestruj" className="btn" />
         </form>
         <p>
           Masz już konto? <Link href="/account/login">Zaloguj się</Link>
