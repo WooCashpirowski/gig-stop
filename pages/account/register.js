@@ -8,12 +8,14 @@ import 'react-toastify/dist/ReactToastify.css'
 import styles from '@/styles/AuthForm.module.css'
 
 export default function RegisterPage() {
-  const [userName, setUserName] = useState('')
+  const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConf, setPasswordConf] = useState('')
 
   const { register, error } = useContext(AuthContext)
+
+  useEffect(() => error && toast.error(error))
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -21,7 +23,7 @@ export default function RegisterPage() {
       toast.error('Hasła nie są zgodne')
       return
     }
-    register({ userName, email, password })
+    register({ username, email, password })
   }
 
   return (
@@ -38,8 +40,8 @@ export default function RegisterPage() {
               type="text"
               name="name"
               id="name"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div>
