@@ -1,35 +1,35 @@
 import Layout from '@/components/Layout'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { ToastContainer, toast } from 'react-toastify'
+// import { useRouter } from 'next/router'
+// import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { API_URL } from '@/config/index'
 import styles from '@/styles/Event.module.css'
 import Image from 'next/image'
-import { FaPencilAlt, FaTimes } from 'react-icons/fa'
+// import { FaPencilAlt, FaTimes } from 'react-icons/fa'
 
 export default function EventPage({ evt }) {
-  const router = useRouter()
+  // const router = useRouter()
 
-  const deleteEvent = async (e) => {
-    e.preventDefault()
-    if (confirm('Na pewno?')) {
-      const res = await fetch(`${API_URL}/events/${evt.id}`, {
-        method: 'DELETE',
-      })
-      const data = await res.json()
-      if (!res.ok) {
-        toast.error(data.message)
-      } else {
-        router.push('/events')
-      }
-    }
-  }
+  // const deleteEvent = async (e) => {
+  //   e.preventDefault()
+  //   if (confirm('Na pewno?')) {
+  //     const res = await fetch(`${API_URL}/events/${evt.id}`, {
+  //       method: 'DELETE',
+  //     })
+  //     const data = await res.json()
+  //     if (!res.ok) {
+  //       toast.error(data.message)
+  //     } else {
+  //       router.push('/events')
+  //     }
+  //   }
+  // }
 
   return (
     <Layout>
       <div className={styles.event}>
-        <div className={styles.controls}>
+        {/* <div className={styles.controls}>
           <Link href={`/events/edit/${evt.id}`}>
             <a>
               <FaPencilAlt /> Edytuj
@@ -39,11 +39,11 @@ export default function EventPage({ evt }) {
             {' '}
             <FaTimes /> Usuń
           </a>
-        </div>
+        </div> */}
         <span>
           {new Date(evt.date).toLocaleDateString('PL')}, {evt.time}
         </span>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
         <h1>{evt.name}</h1>
         {evt.image && (
           <div className={styles.image}>
