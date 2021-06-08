@@ -2,20 +2,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fff;
-  color: #333;
+  background: #242526;
+  color: #b0b3b8;
   height: 60px;
   padding: 0 30px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.header a {
-  color: #333;
+.header li:not(:last-child) {
   margin-right: 20px;
+}
+.header a {
+  color: #b0b3b8;
 }
 
 .header a:hover {
-  color: #000;
+  color: #e4e6eb;
 }
 .header ul {
   display: flex;

@@ -1,7 +1,16 @@
 .search input {
   width: 250px;
   height: 35px;
-  padding: 5px;
+  padding: 15px;
   border: 1px #777 solid;
-  border-radius: 5px;
+  border-radius: 25px;
+  background: #e4e6eb;
+}
+
+.search input::placeholder {
+  color: #3a3b3c;
+}
+
+.search input:focus::placeholder {
+  color: #e4e6eb;
 }

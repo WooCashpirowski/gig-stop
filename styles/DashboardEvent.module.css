@@ -1,24 +1,40 @@
 .event {
   margin: 10px 0;
   padding: 10px;
-  border-radius: 5px;
-  border: 1px #ddd solid;
-  background-color: #f4f4f4;
+  background: #242526;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
 
 .event h4 {
-  margin-bottom: 10px;
   flex: 2;
+}
+
+.event a {
+  color: #e4e6eb;
 }
 
 .edit,
 .delete {
   margin: 10px;
+  display: flex;
+  align-items: center;
+  width: 70px;
 }
 
-.delete {
+.edit > svg,
+.delete > svg {
+  margin-right: 5px;
+}
+
+.event a.edit {
+  color: #b0b3b8;
+}
+.event a.edit:hover {
+  color: #e4e6eb;
+}
+
+.event a.delete {
   color: red;
 }

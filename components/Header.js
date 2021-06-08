@@ -35,10 +35,7 @@ export default function Header() {
                 </Link>
               </li>
               <li>
-                <button
-                  className="btn-secondary btn-icon"
-                  onClick={() => logout()}
-                >
+                <button className="btn-header" onClick={() => logout()}>
                   <FaSignOutAlt />
                   Wyloguj
                 </button>
@@ -47,7 +44,7 @@ export default function Header() {
           ) : (
             <li>
               <Link href="/account/login">
-                <a className="btn-secondary btn-icon">
+                <a className="btn-header">
                   <FaSignInAlt />
                   Logowanie
                 </a>
